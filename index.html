@@ -1,0 +1,226 @@
+<html><head><base href="https://restauranteapp.com/dashboard">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Principal - Austin Mama's</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url('https://dopanama.com/web/image/4739-9e0e70e9/AustinMamas01.jpg?access_token=2c4d8353-81a3-4f78-9dc2-8cf3b7bbf33f');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    header {
+        background-color: rgba(51, 51, 51, 0.9);
+        color: white;
+        padding: 20px 0;
+        text-align: center;
+    }
+    .logo-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .logo {
+        max-height: 80px;
+        margin-bottom: 10px;
+    }
+    .restaurant-name {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        color: #FFD700;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        font-family: 'Brush Script MT', cursive;
+    }
+    nav {
+        background-color: rgba(68, 68, 68, 0.9);
+        padding: 10px 0;
+    }
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+    }
+    nav ul li {
+        margin: 0 10px;
+    }
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    nav ul li a:hover {
+        color: #FFD700;
+    }
+    nav ul li a.active {
+        color: #FFD700;
+        font-weight: bold;
+    }
+    h1, h2 {
+        color: #333;
+    }
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+    .dashboard-item {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+    .dashboard-item:hover {
+        transform: translateY(-5px);
+    }
+    .dashboard-item h3 {
+        margin-top: 0;
+        color: #333;
+        border-bottom: 2px solid #FFD700;
+        padding-bottom: 5px;
+    }
+    .chart-container {
+        height: 200px;
+    }
+    .quick-actions {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+    .quick-action-btn {
+        padding: 10px 15px;
+        background-color: #FFD700;
+        color: #333;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: bold;
+    }
+    .quick-action-btn:hover {
+        background-color: #FFA500;
+        transform: scale(1.05);
+    }
+    .welcome-message {
+        text-align: center;
+        font-size: 1.2em;
+        margin-bottom: 20px;
+        color: #333;
+    }
+</style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="https://static.wixstatic.com/media/5c0b69_ab826c03ff184e2a8be914b37e338e43~mv2.png" alt="Logo de Austin Mama's" class="logo" width="180" height="80">
+            <div class="restaurant-name">Austin Mama's</div>
+        </div>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="/dashboard" class="active">Panel Principal</a></li>
+            <li><a href="/inventario">Inventario</a></li>
+            <li><a href="/pedidos">Pedidos</a></li>
+            <li><a href="/reportes">Reportes</a></li>
+            <li><a href="/logout">Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="welcome-message">
+            <h2>Bienvenido al Panel Principal de Austin Mama's</h2>
+            <p>Aquí encontrará un resumen de la información más importante para la gestión de su restaurante.</p>
+        </div>
+        <div class="dashboard-grid">
+            <div class="dashboard-item">
+                <h3>Ventas Diarias</h3>
+                <div class="chart-container">
+                    <canvas id="dailySalesChart"></canvas>
+                </div>
+            </div>
+            <div class="dashboard-item">
+                <h3>Pedidos Pendientes</h3>
+                <p id="pendingOrders">Cargando...</p>
+            </div>
+            <div class="dashboard-item">
+                <h3>Plato más vendido</h3>
+                <p id="topDish">Cargando...</p>
+            </div>
+            <div class="dashboard-item">
+                <h3>Inventario Bajo</h3>
+                <ul id="lowInventory">
+                    <li>Cargando...</li>
+                </ul>
+            </div>
+        </div>
+        <div class="quick-actions">
+            <button class="quick-action-btn" onclick="location.href='/pedidos'">Ver Pedidos</button>
+            <button class="quick-action-btn" onclick="location.href='/inventario'">Actualizar Inventario</button>
+            <button class="quick-action-btn" onclick="location.href='/reportes'">Generar Reporte</button>
+        </div>
+    </div>
+
+    <script>
+        // Datos de ejemplo para la gráfica de ventas diarias
+        const dailySalesData = {
+            labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+            datasets: [{
+                label: 'Ventas ($)',
+                data: [1200, 1900, 1500, 1700, 2200, 2400, 2000],
+                backgroundColor: 'rgba(255, 215, 0, 0.5)',
+                borderColor: 'rgba(255, 215, 0, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        // Configuración de la gráfica de ventas diarias
+        const dailySalesChart = new Chart(document.getElementById('dailySalesChart'), {
+            type: 'bar',
+            data: dailySalesData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Simulación de carga de datos
+        setTimeout(() => {
+            document.getElementById('pendingOrders').textContent = '12 pedidos pendientes';
+            document.getElementById('topDish').textContent = 'Tacos de Austin Mama\'s';
+            document.getElementById('lowInventory').innerHTML = `
+                <li>Tortillas de maíz (2 paquetes)</li>
+                <li>Aguacate (5 unidades)</li>
+                <li>Cilantro (1 manojo)</li>
+            `;
+        }, 1000);
+    </script>
+</body></html>

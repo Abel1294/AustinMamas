@@ -1,0 +1,101 @@
+<html><head><base href="https://restauranteapp.com/login">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iniciar Sesión - Austin Mama's</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url('https://dopanama.com/web/image/4739-9e0e70e9/AustinMamas01.jpg?access_token=2c4d8353-81a3-4f78-9dc2-8cf3b7bbf33f');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .login-container {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        width: 90%;
+    }
+    .logo {
+        max-width: 150px;
+        margin-bottom: 20px;
+    }
+    h1 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    input {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #FFD700;
+        color: #333;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .btn:hover {
+        background-color: #FFA500;
+        transform: scale(1.05);
+    }
+    .error-message {
+        color: #FF0000;
+        margin-top: 10px;
+        display: none;
+    }
+</style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="https://static.wixstatic.com/media/5c0b69_ab826c03ff184e2a8be914b37e338e43~mv2.png" alt="Logo de Austin Mama's" class="logo" width="150" height="67">
+        <h1>Iniciar Sesión</h1>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Usuario" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button type="submit" class="btn">Iniciar Sesión</button>
+        </form>
+        <p class="error-message" id="errorMessage">Usuario o contraseña incorrectos. Por favor, intente nuevamente.</p>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            
+            // Simular validación de credenciales
+            if (username === 'admin' && password === 'password') {
+                // Redirigir al dashboard en caso de éxito
+                window.location.href = 'https://restauranteapp.com/dashboard';
+            } else {
+                // Mostrar mensaje de error
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        });
+    </script>
+</body></html>
